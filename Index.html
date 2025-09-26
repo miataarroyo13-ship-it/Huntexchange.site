@@ -6,19 +6,38 @@
   <title>Huntexchange.site</title>
   <style>
     /* Reset & basic styles */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; }
-    a { text-decoration: none; color: inherit; }
+    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; }
 
-    /* Header */
-    header {
+    /* Navigation */
+    nav {
+      position: sticky;
+      top: 0;
       background: #1e3c72;
       color: #fff;
-      padding: 2rem 1rem;
+      display: flex;
+      justify-content: center;
+      padding: 1rem;
+      z-index: 1000;
+    }
+    nav a {
+      margin: 0 1rem;
+      color: #fff;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    nav a:hover { color: #ffcc00; }
+
+    /* Header / Hero */
+    header {
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #fff;
+      padding: 6rem 1rem 4rem;
       text-align: center;
     }
-    header h1 { font-size: 3rem; margin-bottom: 0.5rem; }
-    header p { font-size: 1.25rem; margin-bottom: 1.5rem; }
+    header h1 { font-size: 3rem; margin-bottom: 0.5rem; opacity: 0; transform: translateY(-20px); animation: fadeInUp 1s forwards 0.3s; }
+    header p { font-size: 1.25rem; margin-bottom: 2rem; opacity: 0; transform: translateY(-20px); animation: fadeInUp 1s forwards 0.6s; }
     header a.button {
       display: inline-block;
       padding: 0.75rem 1.5rem;
@@ -27,6 +46,9 @@
       font-weight: bold;
       border-radius: 5px;
       transition: background 0.3s;
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: fadeInUp 1s forwards 0.9s;
     }
     header a.button:hover { background-color: #ffaa00; }
 
@@ -35,13 +57,13 @@
       padding: 4rem 1rem;
       max-width: 900px;
       margin: auto;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s forwards;
     }
-    section h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: #1e3c72;
-      text-align: center;
-    }
+    section:nth-of-type(odd) { animation-delay: 0.2s; }
+    section:nth-of-type(even) { animation-delay: 0.4s; }
+    section h2 { font-size: 2rem; margin-bottom: 1rem; color: #1e3c72; text-align: center; }
     section p { margin-bottom: 1.5rem; text-align: center; }
 
     /* Features */
@@ -53,9 +75,9 @@
       border-radius: 10px;
       flex: 1 1 250px;
       text-align: center;
-      transition: transform 0.3s;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
-    .feature-card:hover { transform: translateY(-5px); }
+    .feature-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
 
     /* Footer */
     footer {
@@ -66,17 +88,32 @@
       margin-top: 2rem;
     }
 
+    /* Animations */
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     /* Responsive */
     @media(max-width: 600px){
       header h1 { font-size: 2.2rem; }
       section h2 { font-size: 1.75rem; }
+      nav { flex-direction: column; }
+      nav a { margin: 0.5rem 0; }
     }
   </style>
 </head>
 <body>
 
+  <!-- Navigation -->
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#features">Features</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
   <!-- Header / Hero -->
-  <header>
+  <header id="home">
     <h1>Huntexchange.site</h1>
     <p>Your go-to platform for trading and hunting resources.</p>
     <a href="#features" class="button">Get Started</a>
