@@ -11,11 +11,11 @@
       padding: 0;
       background: #0d1117;
       color: #e6edf3;
-      text-align: center;
     }
     header {
       background: #161b22;
       padding: 20px;
+      text-align: center;
       box-shadow: 0 2px 5px rgba(0,0,0,0.5);
     }
     header h1 {
@@ -35,37 +35,50 @@
     nav a:hover {
       color: #58a6ff;
     }
+
+    /* Ticker bar */
+    .ticker {
+      background: #111418;
+      color: #e6edf3;
+      padding: 10px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      border-top: 1px solid #30363d;
+      border-bottom: 1px solid #30363d;
+    }
+    .ticker span {
+      display: inline-block;
+      padding: 0 30px;
+      animation: ticker 25s linear infinite;
+    }
+    @keyframes ticker {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
     section {
-      padding: 50px 20px;
+      padding: 40px 20px;
+      text-align: center;
     }
-    .btn {
-      display: inline-block;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
       margin-top: 20px;
-      padding: 12px 25px;
-      background: #238636;
-      color: #fff;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
     }
-    .btn:hover {
-      background: #2ea043;
-    }
-    .price-box {
+    .card {
       background: #161b22;
-      display: inline-block;
-      margin: 20px;
       padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-      min-width: 180px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
-    .price-box h3 {
+    .card h3 {
       margin: 0 0 10px;
       color: #58a6ff;
     }
     .search-box {
       margin-top: 20px;
+      text-align: center;
     }
     .search-box input {
       padding: 10px;
@@ -92,6 +105,7 @@
       margin-top: 50px;
       font-size: 0.9em;
       color: #8b949e;
+      text-align: center;
     }
   </style>
 </head>
@@ -107,28 +121,29 @@
     </nav>
   </header>
 
-  <section>
-    <h2>Track Crypto & Stock Markets in Real-Time</h2>
-    <p>Huntexchange.site brings you live prices, market insights, and tools to stay ahead in trading.</p>
-    <a href="#" class="btn">Launch Dashboard</a>
-  </section>
+  <!-- Ticker -->
+  <div class="ticker">
+    <span id="ticker-text">Loading market data...</span>
+  </div>
 
   <section>
     <h2>Live Crypto Prices</h2>
-    <div class="price-box">
-      <h3>Bitcoin (BTC)</h3>
-      <p id="btc-price">Loading...</p>
-    </div>
-    <div class="price-box">
-      <h3>Ethereum (ETH)</h3>
-      <p id="eth-price">Loading...</p>
+    <div class="grid">
+      <div class="card">
+        <h3>Bitcoin (BTC)</h3>
+        <p id="btc-price">Loading...</p>
+      </div>
+      <div class="card">
+        <h3>Ethereum (ETH)</h3>
+        <p id="eth-price">Loading...</p>
+      </div>
     </div>
 
     <div class="search-box">
       <h3>Search Any Crypto</h3>
       <input type="text" id="crypto-input" placeholder="Enter ticker or name (e.g. DOGE or dogecoin)" />
       <button onclick="searchCrypto()">Search</button>
-      <div class="price-box" id="crypto-result" style="display:none;">
+      <div class="card" id="crypto-result" style="display:none; margin-top:20px;">
         <h3 id="crypto-symbol"></h3>
         <p id="crypto-price"></p>
       </div>
@@ -137,20 +152,22 @@
 
   <section>
     <h2>Live Stock Prices</h2>
-    <div class="price-box">
-      <h3>Tesla (TSLA)</h3>
-      <p id="tsla-price">Loading...</p>
-    </div>
-    <div class="price-box">
-      <h3>Apple (AAPL)</h3>
-      <p id="aapl-price">Loading...</p>
+    <div class="grid">
+      <div class="card">
+        <h3>Tesla (TSLA)</h3>
+        <p id="tsla-price">Loading...</p>
+      </div>
+      <div class="card">
+        <h3>Apple (AAPL)</h3>
+        <p id="aapl-price">Loading...</p>
+      </div>
     </div>
 
     <div class="search-box">
       <h3>Search Any Stock</h3>
       <input type="text" id="stock-input" placeholder="Enter ticker (e.g. MSFT)" />
       <button onclick="searchStock()">Search</button>
-      <div class="price-box" id="stock-result" style="display:none;">
+      <div class="card" id="stock-result" style="display:none; margin-top:20px;">
         <h3 id="stock-symbol"></h3>
         <p id="stock-price"></p>
       </div>
@@ -162,8 +179,13 @@
   </footer>
 
   <script>
-    // Store CoinGecko coin list for symbol mapping
     let coinList = [];
+    let trackedAssets = [
+      { type: "crypto", id: "bitcoin", symbol: "BTC", price: null },
+      { type: "crypto", id: "ethereum", symbol: "ETH", price: null },
+      { type: "stock", symbol: "TSLA", price: null },
+      { type: "stock", symbol: "AAPL", price: null }
+    ];
 
     async function loadCoinList() {
       try {
@@ -176,55 +198,70 @@
 
     async function fetchCrypto() {
       try {
-        const res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd");
+        const ids = trackedAssets.filter(a => a.type === "crypto").map(a => a.id).join(",");
+        if (!ids) return;
+        const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`);
         const data = await res.json();
-        document.getElementById("btc-price").textContent = "$" + data.bitcoin.usd.toLocaleString();
-        document.getElementById("eth-price").textContent = "$" + data.ethereum.usd.toLocaleString();
+        trackedAssets.forEach(a => {
+          if (a.type === "crypto" && data[a.id]) {
+            a.price = "$" + data[a.id].usd.toLocaleString();
+          }
+        });
+        document.getElementById("btc-price").textContent = trackedAssets.find(a => a.symbol === "BTC").price;
+        document.getElementById("eth-price").textContent = trackedAssets.find(a => a.symbol === "ETH").price;
+        updateTicker();
       } catch {
-        document.getElementById("btc-price").textContent = "Error";
-        document.getElementById("eth-price").textContent = "Error";
+        console.error("Crypto fetch failed");
       }
     }
 
     async function searchCrypto() {
       const query = document.getElementById("crypto-input").value.toLowerCase().trim();
       if (!query) return;
-
-      // Match by id (name) or symbol
       let match = coinList.find(c => c.id.toLowerCase() === query || c.symbol.toLowerCase() === query);
       if (!match) {
         document.getElementById("crypto-symbol").textContent = "Not Found";
         document.getElementById("crypto-price").textContent = "";
-        document.getElementById("crypto-result").style.display = "inline-block";
+        document.getElementById("crypto-result").style.display = "block";
         return;
       }
-
       try {
         const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${match.id}&vs_currencies=usd`);
         const data = await res.json();
         if (data[match.id]) {
+          const price = "$" + data[match.id].usd.toLocaleString();
           document.getElementById("crypto-symbol").textContent = match.symbol.toUpperCase();
-          document.getElementById("crypto-price").textContent = "$" + data[match.id].usd.toLocaleString();
-          document.getElementById("crypto-result").style.display = "inline-block";
+          document.getElementById("crypto-price").textContent = price;
+          document.getElementById("crypto-result").style.display = "block";
+
+          // Add to trackedAssets if not already
+          if (!trackedAssets.find(a => a.type === "crypto" && a.id === match.id)) {
+            trackedAssets.push({ type: "crypto", id: match.id, symbol: match.symbol.toUpperCase(), price });
+          }
+          updateTicker();
         }
       } catch {
         document.getElementById("crypto-symbol").textContent = "Error";
         document.getElementById("crypto-price").textContent = "";
-        document.getElementById("crypto-result").style.display = "inline-block";
+        document.getElementById("crypto-result").style.display = "block";
       }
     }
 
     async function fetchStocks() {
       try {
-        const res = await fetch("https://query1.finance.yahoo.com/v7/finance/quote?symbols=TSLA,AAPL");
+        const symbols = trackedAssets.filter(a => a.type === "stock").map(a => a.symbol).join(",");
+        if (!symbols) return;
+        const res = await fetch(`https://query1.finance.yahoo.com/v7/finance/quote?symbols=${symbols}`);
         const data = await res.json();
-        const tsla = data.quoteResponse.result.find(s => s.symbol === "TSLA");
-        const aapl = data.quoteResponse.result.find(s => s.symbol === "AAPL");
-        document.getElementById("tsla-price").textContent = "$" + tsla.regularMarketPrice.toLocaleString();
-        document.getElementById("aapl-price").textContent = "$" + aapl.regularMarketPrice.toLocaleString();
+        data.quoteResponse.result.forEach(s => {
+          let asset = trackedAssets.find(a => a.type === "stock" && a.symbol === s.symbol);
+          if (asset) asset.price = "$" + s.regularMarketPrice.toLocaleString();
+        });
+        document.getElementById("tsla-price").textContent = trackedAssets.find(a => a.symbol === "TSLA").price;
+        document.getElementById("aapl-price").textContent = trackedAssets.find(a => a.symbol === "AAPL").price;
+        updateTicker();
       } catch {
-        document.getElementById("tsla-price").textContent = "Error";
-        document.getElementById("aapl-price").textContent = "Error";
+        console.error("Stock fetch failed");
       }
     }
 
@@ -236,27 +273,40 @@
         const data = await res.json();
         const stock = data.quoteResponse.result[0];
         if (stock) {
+          const price = "$" + stock.regularMarketPrice.toLocaleString();
           document.getElementById("stock-symbol").textContent = stock.symbol;
-          document.getElementById("stock-price").textContent = "$" + stock.regularMarketPrice.toLocaleString();
-          document.getElementById("stock-result").style.display = "inline-block";
+          document.getElementById("stock-price").textContent = price;
+          document.getElementById("stock-result").style.display = "block";
+
+          // Add to trackedAssets if not already
+          if (!trackedAssets.find(a => a.type === "stock" && a.symbol === stock.symbol)) {
+            trackedAssets.push({ type: "stock", symbol: stock.symbol, price });
+          }
+          updateTicker();
         } else {
           document.getElementById("stock-symbol").textContent = "Not Found";
           document.getElementById("stock-price").textContent = "";
-          document.getElementById("stock-result").style.display = "inline-block";
+          document.getElementById("stock-result").style.display = "block";
         }
       } catch {
         document.getElementById("stock-symbol").textContent = "Error";
         document.getElementById("stock-price").textContent = "";
-        document.getElementById("stock-result").style.display = "inline-block";
+        document.getElementById("stock-result").style.display = "block";
       }
     }
 
-    // Initial load
+    function updateTicker() {
+      let text = trackedAssets
+        .filter(a => a.price)
+        .map(a => `${a.symbol}: ${a.price}`)
+        .join(" | ");
+      document.getElementById("ticker-text").textContent = text || "Loading market data...";
+    }
+
+    // Load everything
     loadCoinList();
     fetchCrypto();
     fetchStocks();
-
-    // Refresh every 1 min
     setInterval(fetchCrypto, 60000);
     setInterval(fetchStocks, 60000);
   </script>
