@@ -4,202 +4,261 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Huntexchange.site</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: #f4f6f9; }
-
-    nav {
-      position: sticky; top: 0; background: #0d1b2a; color: #fff;
-      display: flex; justify-content: center; padding: 1rem; z-index: 1000;
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #0d1117;
+      color: #e6edf3;
+      text-align: center;
     }
-    nav a { margin: 0 1rem; color: #fff; font-weight: bold; text-transform: uppercase; transition: color 0.3s; }
-    nav a:hover { color: #00d084; }
-
     header {
-      background: linear-gradient(135deg, #0d1b2a, #1b263b);
-      color: #fff; padding: 6rem 1rem 4rem; text-align: center;
+      background: #161b22;
+      padding: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
     }
-    header h1 { font-size: 3rem; margin-bottom: 0.5rem; }
-    header p { font-size: 1.25rem; margin-bottom: 2rem; color: #cfd8dc; }
-    header a.button {
-      display: inline-block; padding: 0.75rem 1.5rem; background-color: #00d084; color: #000;
-      font-weight: bold; border-radius: 5px; transition: background 0.3s;
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+      color: #58a6ff;
     }
-    header a.button:hover { background-color: #00b374; }
-
-    section { padding: 4rem 1rem; max-width: 1100px; margin: auto; text-align: center; }
-    section h2 { font-size: 2rem; margin-bottom: 1rem; color: #0d1b2a; }
-    section p { margin-bottom: 1.5rem; color: #555; }
-
-    .market { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; margin-top: 2rem; }
-    .market-card {
-      background: #1b263b; color: #fff; padding: 1.5rem; border-radius: 10px;
-      flex: 1 1 280px; text-align: center;
+    nav {
+      margin-top: 10px;
     }
-    .market-card h3 { color: #00d084; margin-bottom: 0.5rem; }
-    .market-card canvas { margin-top: 1rem; }
-
+    nav a {
+      margin: 0 15px;
+      color: #e6edf3;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: #58a6ff;
+    }
+    section {
+      padding: 50px 20px;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 25px;
+      background: #238636;
+      color: #fff;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .btn:hover {
+      background: #2ea043;
+    }
+    .price-box {
+      background: #161b22;
+      display: inline-block;
+      margin: 20px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      min-width: 180px;
+    }
+    .price-box h3 {
+      margin: 0 0 10px;
+      color: #58a6ff;
+    }
+    .search-box {
+      margin-top: 20px;
+    }
+    .search-box input {
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+      margin-right: 10px;
+    }
+    .search-box button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      background: #238636;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .search-box button:hover {
+      background: #2ea043;
+    }
     footer {
-      background: #0d1b2a; color: #fff; text-align: center; padding: 2rem 1rem; margin-top: 2rem;
-    }
-
-    @media(max-width: 600px){
-      header h1 { font-size: 2.2rem; }
-      section h2 { font-size: 1.75rem; }
-      nav { flex-direction: column; }
-      nav a { margin: 0.5rem 0; }
+      background: #161b22;
+      padding: 15px;
+      margin-top: 50px;
+      font-size: 0.9em;
+      color: #8b949e;
     }
   </style>
 </head>
 <body>
-
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#features">Features</a>
-    <a href="#market">Markets</a>
-    <a href="#contact">Contact</a>
-  </nav>
-
-  <header id="home">
+  <header>
     <h1>Huntexchange.site</h1>
-    <p>Crypto & Stock Market Exchange — Trade smarter, faster, safer.</p>
-    <a href="#market" class="button">Explore Markets</a>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Crypto</a>
+      <a href="#">Stocks</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
   </header>
 
-  <section id="about">
-    <h2>About Us</h2>
-    <p>Huntexchange.site is your modern gateway to cryptocurrency and stock markets. 
-    Track assets, exchange tokens, and make smarter investments — all in one place.</p>
+  <section>
+    <h2>Track Crypto & Stock Markets in Real-Time</h2>
+    <p>Huntexchange.site brings you live prices, market insights, and tools to stay ahead in trading.</p>
+    <a href="#" class="btn">Launch Dashboard</a>
   </section>
 
-  <section id="features">
-    <h2>Why Choose Huntexchange?</h2>
-    <div class="market">
-      <div class="market-card"><h3>Real-Time Data</h3><p>Live crypto & stock prices updated instantly.</p></div>
-      <div class="market-card"><h3>Multi-Asset Trading</h3><p>Crypto, stocks, and tokens on one platform.</p></div>
-      <div class="market-card"><h3>Secure</h3><p>Protected with advanced encryption & security.</p></div>
+  <section>
+    <h2>Live Crypto Prices</h2>
+    <div class="price-box">
+      <h3>Bitcoin (BTC)</h3>
+      <p id="btc-price">Loading...</p>
     </div>
-  </section>
+    <div class="price-box">
+      <h3>Ethereum (ETH)</h3>
+      <p id="eth-price">Loading...</p>
+    </div>
 
-  <section id="market">
-    <h2>Markets</h2>
-    <p>Live prices with 7-day mini charts.</p>
-    <div class="market">
-      <div class="market-card" id="btc">
-        <h3>Bitcoin (BTC)</h3>
-        <p id="btc-price">Loading...</p>
-        <canvas id="btcChart" width="250" height="100"></canvas>
-      </div>
-      <div class="market-card" id="eth">
-        <h3>Ethereum (ETH)</h3>
-        <p id="eth-price">Loading...</p>
-        <canvas id="ethChart" width="250" height="100"></canvas>
-      </div>
-      <div class="market-card" id="aapl">
-        <h3>Apple (AAPL)</h3>
-        <p id="aapl-price">Loading...</p>
-        <canvas id="aaplChart" width="250" height="100"></canvas>
-      </div>
-      <div class="market-card" id="tsla">
-        <h3>Tesla (TSLA)</h3>
-        <p id="tsla-price">Loading...</p>
-        <canvas id="tslaChart" width="250" height="100"></canvas>
+    <div class="search-box">
+      <h3>Search Any Crypto</h3>
+      <input type="text" id="crypto-input" placeholder="Enter ticker or name (e.g. DOGE or dogecoin)" />
+      <button onclick="searchCrypto()">Search</button>
+      <div class="price-box" id="crypto-result" style="display:none;">
+        <h3 id="crypto-symbol"></h3>
+        <p id="crypto-price"></p>
       </div>
     </div>
   </section>
 
-  <section id="contact">
-    <h2>Contact Us</h2>
-    <p>Email: <a href="mailto:support@huntexchange.site">support@huntexchange.site</a></p>
+  <section>
+    <h2>Live Stock Prices</h2>
+    <div class="price-box">
+      <h3>Tesla (TSLA)</h3>
+      <p id="tsla-price">Loading...</p>
+    </div>
+    <div class="price-box">
+      <h3>Apple (AAPL)</h3>
+      <p id="aapl-price">Loading...</p>
+    </div>
+
+    <div class="search-box">
+      <h3>Search Any Stock</h3>
+      <input type="text" id="stock-input" placeholder="Enter ticker (e.g. MSFT)" />
+      <button onclick="searchStock()">Search</button>
+      <div class="price-box" id="stock-result" style="display:none;">
+        <h3 id="stock-symbol"></h3>
+        <p id="stock-price"></p>
+      </div>
+    </div>
   </section>
 
   <footer>
-    <p>&copy; 2025 Huntexchange.site — Crypto & Stock Exchange Platform</p>
+    <p>&copy; 2025 Huntexchange.site — All rights reserved.</p>
   </footer>
 
   <script>
-    const TWELVE_API_KEY = "1b858ef9070d43f8a18dfd0af60a0d87"; // 👈 replace this with your Twelve Data key
+    // Store CoinGecko coin list for symbol mapping
+    let coinList = [];
 
-    // Chart setup helper
-    function createChart(ctx, data, label, color) {
-      return new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: data.map((_, i) => i),
-          datasets: [{
-            label,
-            data,
-            borderColor: color,
-            backgroundColor: 'transparent',
-            tension: 0.3,
-            pointRadius: 0
-          }]
-        },
-        options: {
-          plugins: { legend: { display: false } },
-          scales: { x: { display: false }, y: { display: false } },
-          responsive: true,
-          maintainAspectRatio: false
+    async function loadCoinList() {
+      try {
+        const res = await fetch("https://api.coingecko.com/api/v3/coins/list");
+        coinList = await res.json();
+      } catch {
+        console.error("Failed to load coin list");
+      }
+    }
+
+    async function fetchCrypto() {
+      try {
+        const res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd");
+        const data = await res.json();
+        document.getElementById("btc-price").textContent = "$" + data.bitcoin.usd.toLocaleString();
+        document.getElementById("eth-price").textContent = "$" + data.ethereum.usd.toLocaleString();
+      } catch {
+        document.getElementById("btc-price").textContent = "Error";
+        document.getElementById("eth-price").textContent = "Error";
+      }
+    }
+
+    async function searchCrypto() {
+      const query = document.getElementById("crypto-input").value.toLowerCase().trim();
+      if (!query) return;
+
+      // Match by id (name) or symbol
+      let match = coinList.find(c => c.id.toLowerCase() === query || c.symbol.toLowerCase() === query);
+      if (!match) {
+        document.getElementById("crypto-symbol").textContent = "Not Found";
+        document.getElementById("crypto-price").textContent = "";
+        document.getElementById("crypto-result").style.display = "inline-block";
+        return;
+      }
+
+      try {
+        const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${match.id}&vs_currencies=usd`);
+        const data = await res.json();
+        if (data[match.id]) {
+          document.getElementById("crypto-symbol").textContent = match.symbol.toUpperCase();
+          document.getElementById("crypto-price").textContent = "$" + data[match.id].usd.toLocaleString();
+          document.getElementById("crypto-result").style.display = "inline-block";
         }
-      });
-    }
-
-    // Load crypto prices & charts (CoinGecko)
-    async function loadCrypto() {
-      try {
-        const priceRes = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd&include_24hr_change=true");
-        const priceData = await priceRes.json();
-
-        document.getElementById("btc-price").innerHTML = `$${priceData.bitcoin.usd.toLocaleString()} <small>(${priceData.bitcoin.usd_24h_change.toFixed(2)}% 24h)</small>`;
-        document.getElementById("eth-price").innerHTML = `$${priceData.ethereum.usd.toLocaleString()} <small>(${priceData.ethereum.usd_24h_change.toFixed(2)}% 24h)</small>`;
-
-        // 7-day charts
-        const btcRes = await fetch("https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=7");
-        const btcData = await btcRes.json();
-        createChart(document.getElementById("btcChart"), btcData.prices.map(p => p[1]), "BTC", "#f7931a");
-
-        const ethRes = await fetch("https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=usd&days=7");
-        const ethData = await ethRes.json();
-        createChart(document.getElementById("ethChart"), ethData.prices.map(p => p[1]), "ETH", "#627eea");
-
-      } catch (e) {
-        console.error("Crypto API error", e);
+      } catch {
+        document.getElementById("crypto-symbol").textContent = "Error";
+        document.getElementById("crypto-price").textContent = "";
+        document.getElementById("crypto-result").style.display = "inline-block";
       }
     }
 
-    // Load stock prices & charts (Twelve Data)
-    async function loadStock(symbol, elemId, chartId, color) {
+    async function fetchStocks() {
       try {
-        // Current price
-        const priceRes = await fetch(`https://api.twelvedata.com/quote?symbol=${symbol}&apikey=${TWELVE_API_KEY}`);
-        const priceData = await priceRes.json();
-
-        document.getElementById(elemId).innerHTML = 
-          `$${priceData.close} <small>(${parseFloat(priceData.percent_change).toFixed(2)}% Today)</small>`;
-
-        // 7-day chart (daily close)
-        const histRes = await fetch(`https://api.twelvedata.com/time_series?symbol=${symbol}&interval=1day&outputsize=7&apikey=${TWELVE_API_KEY}`);
-        const histData = await histRes.json();
-
-        const closes = histData.values.reverse().map(d => parseFloat(d.close));
-        createChart(document.getElementById(chartId), closes, symbol, color);
-
-      } catch (e) {
-        console.error(`${symbol} API error`, e);
+        const res = await fetch("https://query1.finance.yahoo.com/v7/finance/quote?symbols=TSLA,AAPL");
+        const data = await res.json();
+        const tsla = data.quoteResponse.result.find(s => s.symbol === "TSLA");
+        const aapl = data.quoteResponse.result.find(s => s.symbol === "AAPL");
+        document.getElementById("tsla-price").textContent = "$" + tsla.regularMarketPrice.toLocaleString();
+        document.getElementById("aapl-price").textContent = "$" + aapl.regularMarketPrice.toLocaleString();
+      } catch {
+        document.getElementById("tsla-price").textContent = "Error";
+        document.getElementById("aapl-price").textContent = "Error";
       }
     }
 
-    // Load everything
-    function loadAll() {
-      loadCrypto();
-      loadStock("AAPL", "aapl-price", "aaplChart", "#4caf50");
-      loadStock("TSLA", "tsla-price", "tslaChart", "#e53935");
+    async function searchStock() {
+      const symbol = document.getElementById("stock-input").value.toUpperCase().trim();
+      if (!symbol) return;
+      try {
+        const res = await fetch(`https://query1.finance.yahoo.com/v7/finance/quote?symbols=${symbol}`);
+        const data = await res.json();
+        const stock = data.quoteResponse.result[0];
+        if (stock) {
+          document.getElementById("stock-symbol").textContent = stock.symbol;
+          document.getElementById("stock-price").textContent = "$" + stock.regularMarketPrice.toLocaleString();
+          document.getElementById("stock-result").style.display = "inline-block";
+        } else {
+          document.getElementById("stock-symbol").textContent = "Not Found";
+          document.getElementById("stock-price").textContent = "";
+          document.getElementById("stock-result").style.display = "inline-block";
+        }
+      } catch {
+        document.getElementById("stock-symbol").textContent = "Error";
+        document.getElementById("stock-price").textContent = "";
+        document.getElementById("stock-result").style.display = "inline-block";
+      }
     }
 
-    loadAll();
-    setInterval(loadAll, 60000); // refresh every 60s
+    // Initial load
+    loadCoinList();
+    fetchCrypto();
+    fetchStocks();
+
+    // Refresh every 1 min
+    setInterval(fetchCrypto, 60000);
+    setInterval(fetchStocks, 60000);
   </script>
 </body>
 </html>
